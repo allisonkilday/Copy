@@ -1,0 +1,19 @@
+config:
+  entities:
+    nodeTypes:
+      "548":
+        defaultStorageLocation: null
+        isDisabled: false
+      "549":
+        defaultStorageLocation: null
+        isDisabled: false
+      "550":
+        defaultStorageLocation: null
+        isDisabled: false
+  packageVariables: ""
+fileVersion: 1
+id: "@coalesce/snowflake/create-or-alter-package"
+name: CreateOrgAlter120
+packageID: "@coalesce/snowflake/create-or-alter-package"
+releaseID: ddf8a2f1-af91-4b4f-be94-c83ac915bccd
+type: Package
