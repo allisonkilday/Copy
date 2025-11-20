@@ -1,6 +1,0 @@
-excludeSelector: ""
-fileVersion: 1
-id: "27"
-includeSelector: "{ location: WORK name: STG_SUPPLIER } OR { location: WORK name: STG_SUPPLIER1 } OR { location: SRC name: SUPPLIER }"
-name: New Job
-type: Job
