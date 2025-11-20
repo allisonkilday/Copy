@@ -1,0 +1,83 @@
+{% if config.preSQL %}
+	{{ stage('Pre-SQL') }}
+	{{ config.preSQL }}
+{% endif %}
+
+{%- if  node.materializationType == 'dynamic_table' %}
+    {{ stage('Refresh ' ~ node.materializationType ) }}
+     ALTER DYNAMIC TABLE {{ ref_no_link(node.location.name, node.name) }} REFRESH;
+{% endif %}
+
+{%- if node.materializationType == 'table' %}
+
+{% if config.testsEnabled and (not parameters.disable_tests_businessvault or parameters.disable_tests_businessvault is none) %}
+    {% set do_test = true %}
+{% else %}
+    {% set do_test = false %}
+{% endif %}
+
+{% if do_test %}
+    {% for test in node.tests %}
+        {% if test.runOrder == 'Before' %}
+            {{ test_stage(test.name, test.continueOnFailure) }}
+            {{ test.templateString }}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+    
+{% if config.truncateBefore %}
+    {{ stage('Truncate dv-bv Table') }}
+	TRUNCATE IF EXISTS {{ ref_no_link(node.location.name, node.name) }}
+{% endif %}
+
+{{ stage('Insert into dv-bv Table') }}
+INSERT INTO {{ ref_no_link(node.location.name, node.name) }}
+(
+	{% for col in columns %}
+	    "{{ col.name }}"{%- if not loop.last -%}, {% endif %}
+	{% endfor %}
+)
+    {% if config.aggregate %}
+    SELECT 
+     {% for col in columns %}
+             {% if col.name == config.is_aggregation_field.name %}{{ config.aggregationFunction }}({% endif %} 
+             "{{ col.name }}"
+             {% if col.name == config.is_aggregation_field.name %}) AS "{{ col.name }}"{% endif %}
+             {%- if not loop.last -%}, {% endif %}
+     {% endfor %}
+    FROM ({% endif %} 
+
+{% for source in sources %}
+    SELECT {% if config.selectDistinct %} DISTINCT {% endif %}
+    {% for col in source.columns %}
+        {{ get_source_transform(col) }} AS "{{ col.name }}"
+        {%- if not loop.last -%}, {% endif %}
+    {% endfor %}
+
+    {{ source.join }}
+
+    {% if not loop.last %}
+        {% if config.insertStrategy in ['UNION', 'UNION ALL'] %}
+            {{ config.insertStrategy }}
+        {% else %}
+            UNION
+        {% endif %}
+    {% endif %}
+{% endfor %}
+{% if config.aggregate %})  {{ node.name }} GROUP BY ALL {% endif %} 
+
+{% if config.postSQL %}
+	{{ stage('Post-SQL') }}
+	{{ config.postSQL }}
+{% endif %}
+
+{% if do_test %}
+    {% for test in node.tests %}
+        {% if test.runOrder == 'After' %}
+            {{ test_stage(test.name, test.continueOnFailure) }}
+            {{ test.templateString }}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% endif %}

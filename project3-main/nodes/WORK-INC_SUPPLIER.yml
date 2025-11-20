@@ -1,0 +1,153 @@
+fileVersion: 1
+id: 88b26ee8-f341-4a03-9381-b336338109f1
+name: INC_SUPPLIER
+operation:
+  config:
+    incColumn:
+      columnCounter: cd012e65-e355-41d7-8af0-deeaeeb2c8e2
+      stepCounter: 88b26ee8-f341-4a03-9381-b336338109f1
+    persistTableLocation: WORK
+    persistTableName: DIM_SUPPLIER
+    refTable: true
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: WORK
+  materializationType: view
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 767ed353-2012-4f0c-b6c2-208ce80fe3f1
+          stepCounter: 88b26ee8-f341-4a03-9381-b336338109f1
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: S_SUPPKEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: cfea23db-000f-43db-b8c4-cf6c7547228c
+                stepCounter: f172f326-f920-4489-8fb5-beb15ca917e0
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 3219b034-3964-4191-8ab8-7ca6ea7cc6c2
+          stepCounter: 88b26ee8-f341-4a03-9381-b336338109f1
+        config: {}
+        dataType: VARCHAR(25)
+        description: ""
+        name: S_NAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 1304c66b-b5e2-46ea-bcc6-87a1cfb94526
+                stepCounter: f172f326-f920-4489-8fb5-beb15ca917e0
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: fec824e0-280d-4545-9fe5-3dde4c3828cc
+          stepCounter: 88b26ee8-f341-4a03-9381-b336338109f1
+        config: {}
+        dataType: VARCHAR(40)
+        description: ""
+        name: S_ADDRESS
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ac79ed22-972c-4bb6-81ad-26f0078ceacb
+                stepCounter: f172f326-f920-4489-8fb5-beb15ca917e0
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 22e38c57-4445-402a-a6fa-0941dde46555
+          stepCounter: 88b26ee8-f341-4a03-9381-b336338109f1
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: S_NATIONKEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: db8946ed-4c56-4d94-b748-d7611e28b193
+                stepCounter: f172f326-f920-4489-8fb5-beb15ca917e0
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 0b51b41b-c00b-4fe2-8d5c-ba359969e92f
+          stepCounter: 88b26ee8-f341-4a03-9381-b336338109f1
+        config: {}
+        dataType: VARCHAR(15)
+        description: ""
+        name: S_PHONE
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: d97beb0e-5039-41e8-94e5-b461967002e8
+                stepCounter: f172f326-f920-4489-8fb5-beb15ca917e0
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 80ce2f35-694b-4d44-acaf-1ead73c82d96
+          stepCounter: 88b26ee8-f341-4a03-9381-b336338109f1
+        config: {}
+        dataType: NUMBER(12,2)
+        description: ""
+        name: S_ACCTBAL
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 2f0e46e1-1851-40ae-a7b3-e5e1c1c47470
+                stepCounter: f172f326-f920-4489-8fb5-beb15ca917e0
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: f4aa6537-4383-4944-b231-b8e451256e4c
+          stepCounter: 88b26ee8-f341-4a03-9381-b336338109f1
+        config: {}
+        dataType: VARCHAR(101)
+        description: ""
+        name: S_COMMENT
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: d835e202-05c3-4c60-ba84-dd6cd20609f8
+                stepCounter: f172f326-f920-4489-8fb5-beb15ca917e0
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: cd012e65-e355-41d7-8af0-deeaeeb2c8e2
+          stepCounter: 88b26ee8-f341-4a03-9381-b336338109f1
+        config: {}
+        dataType: TIMESTAMP_LTZ(9)
+        description: ""
+        name: LOADTIME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: e282421a-8b70-4d00-a68a-d214bd43d2cf
+                stepCounter: f172f326-f920-4489-8fb5-beb15ca917e0
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases:
+          SUPPLIER: f172f326-f920-4489-8fb5-beb15ca917e0
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SRC
+            nodeName: SUPPLIER
+        join:
+          joinCondition: FROM {{ ref('SRC', 'SUPPLIER') }} "SUPPLIER"
+        name: INC_SUPPLIER
+        noLinkRefs: []
+  name: INC_SUPPLIER
+  overrideSQL: false
+  schema: ""
+  sqlType: IncrementalLoading200:::230
+  type: sql
+  version: 1
+type: Node
